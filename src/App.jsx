@@ -20,18 +20,19 @@ function App() {
   const saveToLS=(params)=> {
     localStorage.setItem("todos", JSON.stringify(todos))
   }
+
+  const saveToLSOnItemDelete = (updatedTodos)=> {
+    localStorage.setItem("todos", JSON.stringify(updatedTodos))
+  }
   
-
-
   const handleEdit=(e, id)=>{
     let t = todos.filter(i=>i.id === id)
     setTodo(t[0].todo)
     let newTodos=todos.filter(item=>{
       return item.id!==id
     });
-setTodos(newTodos) 
-saveToLS()
-        
+    setTodos(newTodos) 
+    saveToLS()  
   }
 
    const handleChange=(e)=>{ //added value={todo}
@@ -40,12 +41,11 @@ saveToLS()
    }
 
     const handleDelete=(e, id)=>{
-        let newTodos=todos.filter(item=>{
-          return item.id!==id
-        });
-    setTodos(newTodos) //also make a confirm feature
-    saveToLS()
-
+      let newTodos=todos.filter(item=>{
+        return item.id!==id
+      });
+      setTodos(newTodos) //also make a confirm feature
+      saveToLSOnItemDelete(newTodos)
     }
     
       const handleAdd=()=>{
