@@ -17,10 +17,6 @@ function App() {
     }
   }, [])
 
-  const saveToLS=(params)=> {
-    localStorage.setItem("todos", JSON.stringify(todos))
-  }
-
   const saveToLSOnItemDelete = (updatedTodos)=> {
     localStorage.setItem("todos", JSON.stringify(updatedTodos))
   }
@@ -32,7 +28,7 @@ function App() {
       return item.id!==id
     });
     setTodos(newTodos) 
-    saveToLS()  
+    saveToLSOnItemDelete(newTodos)  
   }
 
    const handleChange=(e)=>{ //added value={todo}
@@ -49,10 +45,11 @@ function App() {
     }
     
       const handleAdd=()=>{
-        setTodos([...todos, {id:uuidv4(), todo, isCompleted: false }]) //it updates the to do array, (state updater fn)
+        //it updates the to do array, (state updater fn)
+        const updatedTodos = [...todos, {id:uuidv4(), todo, isCompleted: false }];
+        setTodos(updatedTodos)
         setTodo("")
-        console.log(todos)
-        saveToLS()
+        saveToLSOnItemDelete(updatedTodos);
       }
 
       const handleCheckbox = (e) => {
@@ -63,9 +60,8 @@ function App() {
         }) 
       let newTodos=[...todos];
     newTodos[index].isCompleted=!newTodos[index].isCompleted;
-  setTodos(newTodos)    
-  console.log(newTodos)
-  saveToLS()
+    setTodos(newTodos)
+    saveToLSOnItemDelete(newTodos)
 
  }
 
