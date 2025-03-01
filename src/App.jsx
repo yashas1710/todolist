@@ -31,6 +31,12 @@ function App() {
     saveToLSOnItemDelete(newTodos)  
   }
 
+  const handleKeyDown=(e)=>{
+    if(e.key==="Enter"){
+      handleAdd(); //calls the fn
+    }
+  };
+
    const handleChange=(e)=>{ //added value={todo}
     setTodo(e.target.value) //updates the input value 
 
@@ -72,8 +78,10 @@ function App() {
     <Navbar/>
       <div className="container mx-auto my-5 rounded-3xl p-10 bg-slate-500 text-xl bold min-h-screen ">
       <div className="addTodo my-4">
+        
       <h2 className='text-xl font-bold'>Add a Todo</h2>
-      <input onChange={handleChange} value={todo} type="text" className='w-1/4 rounded-lg'/>
+      
+      <input onChange={handleChange} onKeyDown={handleKeyDown} value={todo} type="text" className='w-1/4 rounded-lg'/>
       <button onClick={handleAdd} className='bg-black hover:bg-slate-600 p-3 py-2 text-sm font-bold text-white rounded-md mx-2'>Add</button>
       </div>
       <h2 className='text-lg font-bold'>Your Todos</h2>
@@ -89,6 +97,7 @@ function App() {
           <div className={item.isCompleted?"line-through":""}>{item.todo}</div>
           </div>
           <div className='buttons flex h-full'>
+            
             <button onClick={(e)=>handleEdit(e ,item.id)} className='bg-black hover:bg-slate-600 p-2 py-1 text-sm font-bold text-white rounded-xl mx-1'>Edit</button>
             <button onClick={(e)=>{handleDelete(e, item.id)}} className='bg-black hover:bg-slate-600 p-2 py-1 text-sm font-bold text-white rounded-xl mx-1'>Delete</button>
           </div>
