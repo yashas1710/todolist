@@ -7,7 +7,8 @@ function App() {
   const[todo,setTodo]=useState("") //use state manages data in our app(react hook)
   const[todos,setTodos]=useState([]) //updated  so we now create dynamic todos display , set todos update the data 
   //set todos is a way to change those tasks
- 
+
+  //setState(fn) updates the state variable in react,triggers re render 
   
   useEffect(() => {
     let todoString=localStorage.getItem("todos")
@@ -49,10 +50,17 @@ function App() {
       setTodos(newTodos) //also make a confirm feature
       saveToLSOnItemDelete(newTodos)
     }
-    
+
       const handleAdd=()=>{
         //it updates the to do array, (state updater fn)
+        const forbiddenWords = ["porn","darshil","Darshil","darshil mehta"];
+      if(forbiddenWords.some(word=>todo.includes(word))){
+        alert("The Phrases used are not allowed");
+        return;
+      }
+        
         const updatedTodos = [...todos, {id:uuidv4(), todo, isCompleted: false }];
+        if(todo.trim()==="") return;
         setTodos(updatedTodos)
         setTodo("")
         saveToLSOnItemDelete(updatedTodos);
